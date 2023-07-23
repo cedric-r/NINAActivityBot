@@ -42,7 +42,7 @@ namespace NINAActivityBot.Social
             MastodonAuthenticationClient = new AuthenticationClient(server);
             if (MastodonAuthenticationClient == null) throw new InvalidOperationException("Connection to server failed");
 
-            MastodonAppRegistration = MastodonAuthenticationClient.CreateApp("Your app name", Scope.Read | Scope.Write | Scope.Follow).Result;
+            MastodonAppRegistration = MastodonAuthenticationClient.CreateApp("NINAActivityBot", Scope.Read | Scope.Write | Scope.Follow).Result;
             if (MastodonAppRegistration == null) throw new InvalidOperationException("App creation failed");
         }
 

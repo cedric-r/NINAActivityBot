@@ -1,5 +1,6 @@
 ﻿using NINAActivityBot.Social;
 using NINAActivityBot.Social.Model;
+using NINAActivityBot.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace NINAActivityBot.Bots
     public class MonitorImageBot : Bot
     {
         private const string _BotName = "MonitorImageBot";
-        private string URL = Constants.MonitorImageURL;
+        private string URL = Parameters.MonitorImageURL;
         private const int Interval = 5 * 60 * 1000;
         public bool Stop = false;
 
@@ -47,12 +48,12 @@ namespace NINAActivityBot.Bots
                     {
                         PostImage();
                     }
-                    Console.WriteLine(BotName + ": Sleeping...");
+                    Logger.Log(BotName + ": Sleeping...");
                     Thread.Sleep(Interval);
                 }
                 catch(Exception e)
                 {
-                    Console.WriteLine(BotName + ": Error: " + e.Message);
+                    Logger.Log(BotName + ": Error: " + e.Message);
                 }
             }
         }

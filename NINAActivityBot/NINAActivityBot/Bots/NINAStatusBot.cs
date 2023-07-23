@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using NINAActivityBot.Social.Model;
+using NINAActivityBot.Util;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -16,7 +17,7 @@ namespace NINAActivityBot.Bots
         protected static List<string> ImagesSeen = new List<string>();
         private const string ImageCreatePayload = "{\"sessionName\":\"#SESSION#\",\"id\":\"#IMAGEID#\",\"fullPath\":\"#FULLPATH#\",\"stretchOptions\":{\"autoStretchFactor\":0.2,\"blackClipping\":-2.8,\"unlinkedStretch\":true},\"imageScale\":0.75,\"qualityLevel\":100}";
         private const string _BotName = "NINAStatusBot";
-        private string URL = Constants.NINAURL;
+        private string URL = Parameters.NINAURL;
         private const int Interval = 5 * 60 * 1000;
         public bool Stop = false;
 
@@ -35,7 +36,7 @@ namespace NINAActivityBot.Bots
             if (String.IsNullOrEmpty(URL)) throw new ArgumentNullException("URL not defined");
 
             string sessionKey = "";
-            Console.WriteLine(BotName + ": Downloading session from " + URL + "sessions/sessions.json");
+            Logger.Log(BotName + ": Downloading session from " + URL + "sessions/sessions.json");
             using (WebClient client = new WebClient())
             {
                 string sessions = client.DownloadString(URL + "sessions/sessions.json");
@@ -53,7 +54,7 @@ namespace NINAActivityBot.Bots
         {
             if (String.IsNullOrEmpty(URL)) throw new ArgumentNullException("URL not defined");
 
-            Console.WriteLine(BotName + ": Downloading image from " + createURL);
+            Logger.Log(BotName + ": Downloading image from " + createURL);
             string tempFileName = Path.GetTempFileName();
             using (WebClient client = new WebClient())
             {
@@ -82,7 +83,7 @@ namespace NINAActivityBot.Bots
 
         private void LoadSession(string key)
         {
-            Console.WriteLine(BotName + ": Downloading session from " + URL + "sessions/" + key + "/sessionHistory.json");
+            Logger.Log(BotName + ": Downloading session from " + URL + "sessions/" + key + "/sessionHistory.json");
             using (WebClient client = new WebClient())
             {
                 string sessions = client.DownloadString(URL + "sessions/" + key + "/sessionHistory.json");
@@ -107,7 +108,7 @@ namespace NINAActivityBot.Bots
                             payload = payload.Replace("#SESSION#", key);
                             payload = payload.Replace("#IMAGEID#", imageId);
                             payload = payload.Replace("#FULLPATH#", fullPath.Replace("\\", "\\\\")); // NINA expects the backslashes escaped
-                            String imageFile = DownloadLargeImage(URL, URL + Constants.ImageCreateURL, payload);
+                            String imageFile = DownloadLargeImage(URL, URL + Parameters.ImageCreateURL, payload);
 
                             SocialNetPost post = new SocialNetPost();
                             post.Body = "Currently observing " + name;
@@ -137,12 +138,12 @@ namespace NINAActivityBot.Bots
                     {
                         LoadSession(DownloadSession());
                     }
-                    Console.WriteLine(BotName + ": Sleeping...");
+                    Logger.Log(BotName + ": Sleeping...");
                     Thread.Sleep(Interval);
                 }
                 catch(Exception e)
                 {
-                    Console.WriteLine(BotName + ": Error: "+e.Message);
+                    Logger.Log(BotName + ": Error: "+e.Message);
                 }
             }
         }

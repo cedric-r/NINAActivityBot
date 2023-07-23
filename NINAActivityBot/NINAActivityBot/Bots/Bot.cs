@@ -1,5 +1,6 @@
 ﻿using NINAActivityBot.Social;
 using NINAActivityBot.Social.Model;
+using NINAActivityBot.Util;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -24,7 +25,7 @@ namespace NINAActivityBot.Bots
         {
             if (String.IsNullOrEmpty(URL)) throw new ArgumentNullException("URL not defined");
 
-            Console.WriteLine(BotName + ": Downloading image from " + URL);
+            Logger.Log(BotName + ": Downloading image from " + URL);
             string tempFileName = Path.GetTempFileName();
             using (WebClient client = new WebClient())
             {
@@ -45,10 +46,10 @@ namespace NINAActivityBot.Bots
 
         protected void Post(SocialNetPost post)
         {
-            Console.WriteLine(BotName + ": Posting to " + Constants.SocialNetServer);
-            SocialNet social = SocialNetFactory.Create(Constants.SocialNetName);
-            social.Connect(Constants.SocialNetServer);
-            social.Login(Constants.SocialUsername, Constants.SocialPassword);
+            Logger.Log(BotName + ": Posting to " + Parameters.SocialNetServer);
+            SocialNet social = SocialNetFactory.Create(Parameters.SocialNetName);
+            social.Connect(Parameters.SocialNetServer);
+            social.Login(Parameters.SocialUsername, Parameters.SocialPassword);
             social.Post(post);
         }
     }
