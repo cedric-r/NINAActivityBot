@@ -15,7 +15,7 @@ namespace NINAActivityBot.Bots
         private const string _BotName = "MonitorImageBot";
         private string URL = Parameters.MonitorImageURL;
         private const int Interval = 5 * 60 * 1000;
-        public bool Stop = false;
+        private bool StopFlag = false;
 
         public MonitorImageBot() : base(_BotName)
         {
@@ -38,9 +38,9 @@ namespace NINAActivityBot.Bots
             File.Delete(image);
         }
 
-        public void Start(BotCondition condition)
+        public override void Start(BotCondition condition)
         {
-            while (!Stop)
+            while (!StopFlag)
             {
                 try
                 {
@@ -56,6 +56,11 @@ namespace NINAActivityBot.Bots
                     Logger.Log(BotName + ": Error: " + e.Message);
                 }
             }
+        }
+
+        public override void Stop()
+        {
+            StopFlag = true;
         }
     }
 }

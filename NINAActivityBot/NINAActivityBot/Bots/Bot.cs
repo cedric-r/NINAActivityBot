@@ -14,11 +14,13 @@ namespace NINAActivityBot.Bots
 {
     public abstract class Bot
     {
+        public static List<Bot> Bots = new List<Bot>();
         protected string BotName = "Bot";
 
         public Bot(string botname)
         {
             BotName = botname;
+            Bots.Add(this);
         }
 
         protected string DownloadImage(string URL)
@@ -52,5 +54,9 @@ namespace NINAActivityBot.Bots
             social.Login(Parameters.SocialUsername, Parameters.SocialPassword);
             social.Post(post);
         }
+
+        public abstract void Start(BotCondition condition);
+        
+        public abstract void Stop();
     }
 }

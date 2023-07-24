@@ -19,7 +19,7 @@ namespace NINAActivityBot.Bots
         private const string _BotName = "NINAStatusBot";
         private string URL = Parameters.NINAURL;
         private const int Interval = 5 * 60 * 1000;
-        public bool Stop = false;
+        public bool StopFlag = false;
 
         public NINAStatusBot() : base(_BotName)
         {
@@ -128,9 +128,9 @@ namespace NINAActivityBot.Bots
 
         }
 
-        public void Start(BotCondition condition)
+        public override void Start(BotCondition condition)
         {
-            while (!Stop)
+            while (!StopFlag)
             {
                 try
                 {
@@ -146,6 +146,11 @@ namespace NINAActivityBot.Bots
                     Logger.Log(BotName + ": Error: "+e.Message);
                 }
             }
+        }
+
+        public override void Stop()
+        {
+            StopFlag = true;
         }
     }
 }
