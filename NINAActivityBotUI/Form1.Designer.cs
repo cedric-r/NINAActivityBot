@@ -46,7 +46,7 @@
             // 
             // buttonStop
             // 
-            this.buttonStop.Location = new System.Drawing.Point(140, 12);
+            this.buttonStop.Location = new System.Drawing.Point(201, 12);
             this.buttonStop.Name = "buttonStop";
             this.buttonStop.Size = new System.Drawing.Size(75, 23);
             this.buttonStop.TabIndex = 0;
@@ -68,7 +68,7 @@
             // 
             this.textBox1SocialNetName.Location = new System.Drawing.Point(115, 52);
             this.textBox1SocialNetName.Name = "textBox1SocialNetName";
-            this.textBox1SocialNetName.Size = new System.Drawing.Size(100, 23);
+            this.textBox1SocialNetName.Size = new System.Drawing.Size(161, 23);
             this.textBox1SocialNetName.TabIndex = 2;
             this.textBox1SocialNetName.TextChanged += new System.EventHandler(this.textBox1SocialNetName_TextChanged);
             // 
@@ -94,7 +94,7 @@
             // 
             this.textBox1SocialNetServer.Location = new System.Drawing.Point(115, 81);
             this.textBox1SocialNetServer.Name = "textBox1SocialNetServer";
-            this.textBox1SocialNetServer.Size = new System.Drawing.Size(100, 23);
+            this.textBox1SocialNetServer.Size = new System.Drawing.Size(161, 23);
             this.textBox1SocialNetServer.TabIndex = 4;
             this.textBox1SocialNetServer.TextChanged += new System.EventHandler(this.textBox1SocialNetServer_TextChanged);
             // 
@@ -111,7 +111,7 @@
             // 
             this.textBoxSocialUsername.Location = new System.Drawing.Point(115, 110);
             this.textBoxSocialUsername.Name = "textBoxSocialUsername";
-            this.textBoxSocialUsername.Size = new System.Drawing.Size(100, 23);
+            this.textBoxSocialUsername.Size = new System.Drawing.Size(161, 23);
             this.textBoxSocialUsername.TabIndex = 6;
             this.textBoxSocialUsername.TextChanged += new System.EventHandler(this.textBoxSocialUsername_TextChanged);
             // 
@@ -128,7 +128,7 @@
             // 
             this.textBoxPassword.Location = new System.Drawing.Point(115, 139);
             this.textBoxPassword.Name = "textBoxPassword";
-            this.textBoxPassword.Size = new System.Drawing.Size(100, 23);
+            this.textBoxPassword.Size = new System.Drawing.Size(161, 23);
             this.textBoxPassword.TabIndex = 8;
             this.textBoxPassword.TextChanged += new System.EventHandler(this.textBoxPassword_TextChanged);
             // 
@@ -145,7 +145,7 @@
             // 
             this.textBoxNINABaseURL.Location = new System.Drawing.Point(115, 168);
             this.textBoxNINABaseURL.Name = "textBoxNINABaseURL";
-            this.textBoxNINABaseURL.Size = new System.Drawing.Size(100, 23);
+            this.textBoxNINABaseURL.Size = new System.Drawing.Size(161, 23);
             this.textBoxNINABaseURL.TabIndex = 10;
             this.textBoxNINABaseURL.TextChanged += new System.EventHandler(this.textBoxNINABaseURL_TextChanged);
             // 
@@ -162,7 +162,7 @@
             // 
             this.textBoxMonitorIageURL.Location = new System.Drawing.Point(115, 197);
             this.textBoxMonitorIageURL.Name = "textBoxMonitorIageURL";
-            this.textBoxMonitorIageURL.Size = new System.Drawing.Size(100, 23);
+            this.textBoxMonitorIageURL.Size = new System.Drawing.Size(161, 23);
             this.textBoxMonitorIageURL.TabIndex = 12;
             this.textBoxMonitorIageURL.TextChanged += new System.EventHandler(this.textBoxMonitorIageURL_TextChanged);
             // 
@@ -170,7 +170,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(227, 235);
+            this.ClientSize = new System.Drawing.Size(288, 235);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.textBoxMonitorIageURL);
             this.Controls.Add(this.label5);
