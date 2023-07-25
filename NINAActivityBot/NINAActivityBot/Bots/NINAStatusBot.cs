@@ -111,7 +111,7 @@ namespace NINAActivityBot.Bots
                             String imageFile = DownloadLargeImage(URL, URL + Parameters.Instance.ImageCreateURL, payload);
 
                             SocialNetPost post = new SocialNetPost();
-                            post.Body = DateTime.Now + " Currently observing " + name;
+                            post.Body = DateTime.Now + " Currently observing " + name + " with filter " + image.filterName + " for " + image.duration + "s\nHFR=" + image.HFR + ", stars=" + image.detectedStar + ", guiding RMS=" + image.GuidingRMSArcSec + " (RA=" + image.GuidingRMSRAArcSec + ", DEC=" + image.GuidingRMSDECArcSec + ")";
                             post.Visibility = SocialNetVisibility.Unlisted;
                             post.Attachments.Add(new SocialNetAttachment() { FileName = imageFile, Name = imageId + ".jpg" });
                             Post(post);
