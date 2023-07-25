@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 
 namespace NINAActivityBot
 {
-    public static class Parameters
+    public class Parameters
     {
-        public static string SocialNetName = "mastodon";
-        public static string SocialNetServer = "mastodonti.st";
-        public static string SocialUsername = "ninaactivitybot@mastodonti.st";
-        public static string SocialPassword = "***REMOVED***";
-        public static string NINABaseURL = "http://pc.e-eye:81/";
-        public static string NINAURL = NINABaseURL + "sessions/sessions.json";
-        public static string MonitorImageURL = "http://dashboard.e-eye/webcam1.php";
-        public static string ImageCreateURL = "api/1020/image/create";
+        public string SocialNetName { get; set; } = "mastodon";
+        public string SocialNetServer { get; set; } = "mastodonti.st";
+        public string SocialUsername { get; set; } = "ninaactivitybot@mastodonti.st";
+        public string SocialPassword { get; set; } = "***REMOVED***";
+        public string NINABaseURL { get; set; } = "http://pc.e-eye:81/";
+        public string NINAURL { get { return NINABaseURL + "sessions/sessions.json"; }  }
+        public string MonitorImageURL { get; set; } = "http://dashboard.e-eye/webcam1.php";
+        public string ImageCreateURL { get; set; } = "api/1020/image/create";
+
+        public static Parameters Instance = new Parameters();
     }
 }

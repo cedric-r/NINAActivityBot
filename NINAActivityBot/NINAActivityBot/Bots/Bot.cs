@@ -48,10 +48,10 @@ namespace NINAActivityBot.Bots
 
         protected void Post(SocialNetPost post)
         {
-            Logger.Log(BotName + ": Posting to " + Parameters.SocialNetServer);
-            SocialNet social = SocialNetFactory.Create(Parameters.SocialNetName);
-            social.Connect(Parameters.SocialNetServer);
-            social.Login(Parameters.SocialUsername, Parameters.SocialPassword);
+            Logger.Log(BotName + ": Posting to " + Parameters.Instance.SocialNetServer);
+            SocialNet social = SocialNetFactory.Create(Parameters.Instance.SocialNetName);
+            social.Connect(Parameters.Instance.SocialNetServer);
+            social.Login(Parameters.Instance.SocialUsername, Parameters.Instance.SocialPassword);
             social.Post(post);
         }
 

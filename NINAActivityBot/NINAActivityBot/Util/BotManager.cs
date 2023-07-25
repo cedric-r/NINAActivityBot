@@ -18,11 +18,11 @@ namespace NINAActivityBot.Util
 
             Logger.Log("Starting threads");
             MonitorImageBot bot1 = new MonitorImageBot();
-            MonitorImageThread = new Thread(() => bot1.Start(new BotConditionNinaIsRunning(Parameters.NINAURL))) { IsBackground = true };
+            MonitorImageThread = new Thread(() => bot1.Start(new BotConditionNinaIsRunning(Parameters.Instance.NINAURL))) { IsBackground = true };
             MonitorImageThread.Start();
 
-            NINAStatusBot bot2 = new NINAStatusBot(Parameters.NINABaseURL);
-            NINAStatusThread = new Thread(() => bot2.Start(new BotConditionNinaIsRunning(Parameters.NINABaseURL))) { IsBackground = true };
+            NINAStatusBot bot2 = new NINAStatusBot(Parameters.Instance.NINABaseURL);
+            NINAStatusThread = new Thread(() => bot2.Start(new BotConditionNinaIsRunning(Parameters.Instance.NINABaseURL))) { IsBackground = true };
             NINAStatusThread.Start();
 
             Logger.Log("Threads started");

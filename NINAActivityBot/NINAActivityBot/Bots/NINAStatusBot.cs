@@ -17,7 +17,7 @@ namespace NINAActivityBot.Bots
         protected static List<string> ImagesSeen = new List<string>();
         private const string ImageCreatePayload = "{\"sessionName\":\"#SESSION#\",\"id\":\"#IMAGEID#\",\"fullPath\":\"#FULLPATH#\",\"stretchOptions\":{\"autoStretchFactor\":0.2,\"blackClipping\":-2.8,\"unlinkedStretch\":true},\"imageScale\":0.75,\"qualityLevel\":100}";
         private const string _BotName = "NINAStatusBot";
-        private string URL = Parameters.NINAURL;
+        private string URL = Parameters.Instance.NINAURL;
         private const int Interval = 5 * 60 * 1000;
         public bool StopFlag = false;
 
@@ -108,10 +108,10 @@ namespace NINAActivityBot.Bots
                             payload = payload.Replace("#SESSION#", key);
                             payload = payload.Replace("#IMAGEID#", imageId);
                             payload = payload.Replace("#FULLPATH#", fullPath.Replace("\\", "\\\\")); // NINA expects the backslashes escaped
-                            String imageFile = DownloadLargeImage(URL, URL + Parameters.ImageCreateURL, payload);
+                            String imageFile = DownloadLargeImage(URL, URL + Parameters.Instance.ImageCreateURL, payload);
 
                             SocialNetPost post = new SocialNetPost();
-                            post.Body = "Currently observing " + name;
+                            post.Body = DateTime.Now + " Currently observing " + name;
                             post.Visibility = SocialNetVisibility.Unlisted;
                             post.Attachments.Add(new SocialNetAttachment() { FileName = imageFile, Name = imageId + ".jpg" });
                             Post(post);
