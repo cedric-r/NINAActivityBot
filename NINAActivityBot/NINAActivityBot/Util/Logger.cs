@@ -11,6 +11,18 @@ namespace NINAActivityBot.Util
         public static void Log(string message)
         {
             if (Constants.LogToConsole) Console.WriteLine(DateTime.Now + " " + message);
+            if (Constants.LogToFile)
+            {
+                Config.GreateFolder();
+                try
+                {
+                    string strPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData);
+                    strPath = Path.Combine(strPath, Constants.Name);
+                    strPath = Path.Combine(strPath, "app.log");
+                    System.IO.File.AppendAllText(strPath, DateTime.Now + " " + message + "\n");
+                }
+                catch (Exception) { }
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ namespace NINAActivityBot.Util
 {
     public static class Config
     {
-        private static void GreateFolder()
+        internal static void GreateFolder()
         {
             string strPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData);
             strPath = Path.Combine(strPath, Constants.Name);

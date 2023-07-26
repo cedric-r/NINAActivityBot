@@ -10,6 +10,7 @@ namespace NINAActivityBot
     {
         public const string Version = "0.0.2";
         public static bool LogToConsole = true;
+        public static bool LogToFile = true;
         public const string Name = "NINAActivityBot";
     }
 }
