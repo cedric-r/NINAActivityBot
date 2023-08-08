@@ -15,6 +15,16 @@ namespace NINAActivityBot.Bots
     public class NINAStatusBot : Bot
     {
         protected static List<string> ImagesSeen = new List<string>();
+        protected static List<string> EventsSeen = new List<string>();
+        private static Dictionary<string, string> EventMapping = new Dictionary<string, string>() { 
+            { "NINA-START", "NINA starting" }, 
+            { "NINA-ADV-SEQ-START", "Sequence start" },
+            { "NINA-ADV-SEQ-STOP", "Sequence stop" },
+            { "NINA-UNPARK", "Unparking telescope" }, 
+            { "NINA-PARK", "Parking telescope" },
+            { "NINA-DOME-SHUTTER-CLOSED", "Closing shutter" },
+            { "NINA-DOME-SHUTTER-OPENED", "Opening shutter" }
+        };
         private const string ImageCreatePayload = "{\"sessionName\":\"#SESSION#\",\"id\":\"#IMAGEID#\",\"fullPath\":\"#FULLPATH#\",\"stretchOptions\":{\"autoStretchFactor\":0.2,\"blackClipping\":-2.8,\"unlinkedStretch\":true},\"imageScale\":0.75,\"qualityLevel\":100}";
         private const string _BotName = "NINAStatusBot";
         private string URL = Parameters.Instance.NINAURL;
@@ -89,6 +99,24 @@ namespace NINAActivityBot.Bots
                 string sessions = client.DownloadString(URL + "sessions/" + key + "/sessionHistory.json");
 
                 dynamic stuff = JObject.Parse(sessions);
+
+                if (stuff.events.Count > 0)
+                {
+                    var lastEvent = stuff.events.Last;
+                    string eventId = lastEvent.id;
+                    string eventType = lastEvent.type;
+                    if (!EventsSeen.Contains(eventId))
+                    {
+                        if (EventMapping.ContainsKey(eventType))
+                        {
+                            SocialNetPost post = new SocialNetPost();
+                            post.Body = DateTime.Now + " " + EventMapping[eventType];
+                            post.Visibility = SocialNetVisibility.Unlisted;
+                            Post(post);
+                        }
+                        EventsSeen.Add(eventId);
+                    }
+                }
 
                 var target = stuff.targets.Last;
                 if (target != null)

@@ -1,5 +1,8 @@
+using System.Runtime.InteropServices;
+
 namespace NINAActivityBotUI
 {
+    [Guid("3a7e63ad-c813-44f0-9489-e1744c9c2992")]
     internal static class Program
     {
         /// <summary>

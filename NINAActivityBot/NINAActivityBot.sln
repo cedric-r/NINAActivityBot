@@ -5,7 +5,7 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NINAActivityBot", "NINAActivityBot\NINAActivityBot.csproj", "{12833E9C-7401-4A5E-875B-6DC1C825CB50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NINAActivityBotUI", "..\NINAActivityBotUI\NINAActivityBotUI.csproj", "{FB30DA00-9049-4BBD-8769-6DEBD5D1A19C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NINAActivityBotUI", "..\NINAActivityBotUI\NINAActivityBotUI.csproj", "{FB30DA00-9049-4BBD-8769-6DEBD5D1A19C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
