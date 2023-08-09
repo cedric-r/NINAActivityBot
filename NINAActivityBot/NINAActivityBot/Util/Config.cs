@@ -9,7 +9,7 @@ namespace NINAActivityBot.Util
 {
     public static class Config
     {
-        internal static void GreateFolder()
+        internal static void CreateFolder()
         {
             string strPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData);
             strPath = Path.Combine(strPath, Constants.Name);
@@ -23,7 +23,7 @@ namespace NINAActivityBot.Util
         static Object writeLock = new Object();
         public static void SaveConfig()
         {
-            GreateFolder();
+            CreateFolder();
             try
             {
                 lock (writeLock)
@@ -46,7 +46,10 @@ namespace NINAActivityBot.Util
                 strPath = Path.Combine(strPath, "config.json");
                 Parameters.Instance = JsonConvert.DeserializeObject<Parameters>(System.IO.File.ReadAllText(strPath));
             }
-            catch (Exception) { }
+            catch (Exception) 
+            {
+                Parameters.Instance = new Parameters();
+            }
         }
     }
 }

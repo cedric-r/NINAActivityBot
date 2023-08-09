@@ -1,4 +1,5 @@
 ﻿using NINAActivityBot.Bots;
+using NINAActivityBot.Util.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,19 +12,26 @@ namespace NINAActivityBot.Util
     {
         public static void Start()
         {
-            Thread? MonitorImageThread = null;
+            List<Thread> MonitorImageThreads = new List<Thread>();
             Thread? NINAStatusThread = null;
 
             Logger.Log("NINAActivityBot v" + Constants.Version);
 
             Logger.Log("Starting threads");
-            MonitorImageBot bot1 = new MonitorImageBot();
-            MonitorImageThread = new Thread(() => bot1.Start(new BotConditionNinaIsRunning(Parameters.Instance.NINAURL))) { IsBackground = true };
-            MonitorImageThread.Start();
+            foreach (ConfigObservatory observatory in Parameters.Instance.ObservatoryConfig)
+            {
+                foreach (ConfigMonitorCamera camera in observatory.CameraConfig)
+                {
+                    MonitorImageBot bot1 = new MonitorImageBot(camera.MonitorCameraName, observatory.SocialNetConfig, camera);
+                    Thread t = new Thread(() => bot1.Start(new BotConditionNinaIsRunning(observatory.NINAConfig.NINABaseURL))) { IsBackground = true };
+                    MonitorImageThreads.Add(t);
+                    t.Start();
+                }
 
-            NINAStatusBot bot2 = new NINAStatusBot(Parameters.Instance.NINABaseURL);
-            NINAStatusThread = new Thread(() => bot2.Start(new BotConditionNinaIsRunning(Parameters.Instance.NINABaseURL))) { IsBackground = true };
-            NINAStatusThread.Start();
+                NINAStatusBot bot2 = new NINAStatusBot(observatory.NINAConfig.NINAName, observatory.SocialNetConfig, observatory.NINAConfig);
+                NINAStatusThread = new Thread(() => bot2.Start(new BotConditionNinaIsRunning(observatory.NINAConfig.NINABaseURL))) { IsBackground = true };
+                NINAStatusThread.Start();
+            }
 
             Logger.Log("Threads started");
         }

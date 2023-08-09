@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using NINAActivityBot.Social.Model;
 using NINAActivityBot.Util;
+using NINAActivityBot.Util.Model;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -27,29 +28,28 @@ namespace NINAActivityBot.Bots
         };
         private const string ImageCreatePayload = "{\"sessionName\":\"#SESSION#\",\"id\":\"#IMAGEID#\",\"fullPath\":\"#FULLPATH#\",\"stretchOptions\":{\"autoStretchFactor\":0.2,\"blackClipping\":-2.8,\"unlinkedStretch\":true},\"imageScale\":0.75,\"qualityLevel\":100}";
         private const string _BotName = "NINAStatusBot";
-        private string URL = Parameters.Instance.NINAURL;
         private const int Interval = 5 * 60 * 1000;
         public bool StopFlag = false;
+        private ConfigNINA Nina;
+        List<ConfigSocialNet> SocialNets = new List<ConfigSocialNet>();
 
-        public NINAStatusBot() : base(_BotName)
+        public NINAStatusBot(string botName, List<ConfigSocialNet> socialNets, ConfigNINA nina) : base(botName)
         {
-
+            if (socialNets == null) throw new ArgumentNullException("Social nets can't be empty");
+            if (nina == null) throw new ArgumentNullException("NINA configuration can't be empty");
+            Nina = nina;
+            SocialNets = socialNets;
         }
 
-        public NINAStatusBot(string url) : base(_BotName)
+        private string DownloadSession(ConfigNINA nina)
         {
-            URL = url;
-        }
-
-        private string DownloadSession()
-        {
-            if (String.IsNullOrEmpty(URL)) throw new ArgumentNullException("URL not defined");
+            if (String.IsNullOrEmpty(nina.NINABaseURL)) throw new ArgumentNullException("URL not defined");
 
             string sessionKey = "";
-            Logger.Log(BotName + ": Downloading session from " + URL + "sessions/sessions.json");
+            Logger.Log(BotName + ": Downloading session from " + nina.NINABaseURL + "sessions/sessions.json");
             using (WebClient client = new WebClient())
             {
-                string sessions = client.DownloadString(URL + "sessions/sessions.json");
+                string sessions = client.DownloadString(nina.NINABaseURL + "sessions/sessions.json");
 
                 dynamic stuff = JObject.Parse(sessions);
 
@@ -91,12 +91,12 @@ namespace NINAActivityBot.Bots
             return tempFileName;
         }
 
-        private void LoadSession(string key)
+        private void LoadSession(ConfigNINA nina, string key)
         {
-            Logger.Log(BotName + ": Downloading session from " + URL + "sessions/" + key + "/sessionHistory.json");
+            Logger.Log(BotName + ": Downloading session from " + nina.NINABaseURL + "sessions/" + key + "/sessionHistory.json");
             using (WebClient client = new WebClient())
             {
-                string sessions = client.DownloadString(URL + "sessions/" + key + "/sessionHistory.json");
+                string sessions = client.DownloadString(nina.NINABaseURL + "sessions/" + key + "/sessionHistory.json");
 
                 dynamic stuff = JObject.Parse(sessions);
 
@@ -112,7 +112,7 @@ namespace NINAActivityBot.Bots
                             SocialNetPost post = new SocialNetPost();
                             post.Body = DateTime.Now + " " + EventMapping[eventType];
                             post.Visibility = SocialNetVisibility.Unlisted;
-                            Post(post);
+                            Post(SocialNets, post);
                         }
                         EventsSeen.Add(eventId);
                     }
@@ -136,13 +136,13 @@ namespace NINAActivityBot.Bots
                             payload = payload.Replace("#SESSION#", key);
                             payload = payload.Replace("#IMAGEID#", imageId);
                             payload = payload.Replace("#FULLPATH#", fullPath.Replace("\\", "\\\\")); // NINA expects the backslashes escaped
-                            String imageFile = DownloadLargeImage(URL, URL + Parameters.Instance.ImageCreateURL, payload);
+                            String imageFile = DownloadLargeImage(nina.NINABaseURL, nina.NINABaseURL + nina.ImageCreateURL, payload);
 
                             SocialNetPost post = new SocialNetPost();
                             post.Body = DateTime.Now + " Currently observing " + name + " with filter " + image.filterName + " for " + image.duration + "s\n\nHFR=" + image.HFR.ToString("#.####") + ", stars=" + image.detectedStars + ", guiding RMS=" + image.GuidingRMSArcSec + "\" (RA=" + image.GuidingRMSRAArcSec + "\", DEC=" + image.GuidingRMSDECArcSec + "\")";
                             post.Visibility = SocialNetVisibility.Unlisted;
                             post.Attachments.Add(new SocialNetAttachment() { FileName = imageFile, Name = imageId + ".jpg" });
-                            Post(post);
+                            Post(SocialNets, post);
 
                             File.Delete(imageFile);
                         }
@@ -164,7 +164,7 @@ namespace NINAActivityBot.Bots
                 {
                     if (condition.Valid())
                     {
-                        LoadSession(DownloadSession());
+                        LoadSession(Nina, DownloadSession(Nina));
                     }
                     Logger.Log(BotName + ": Sleeping...");
                     Thread.Sleep(Interval);

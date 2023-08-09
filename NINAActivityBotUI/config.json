@@ -1,0 +1,28 @@
+{
+"ObservatoryConfig" : [
+	{
+		"SocialNetConfig" : [
+			{
+				"SocialNetName" : "mastodon",
+				"SocialNetServer" : "mastodonti.st",
+				"SocialUsername" : "ninaactivitybot@mastodonti.st",
+				"SocialPassword" : "XXX"
+			}
+		],
+		"NINAConfig" : 
+			{
+				"NINABaseURL" : "http://pc.e-eye:81/",
+				"NINAURL" : "http://pc.e-eye:81/sessions/sessions.json",
+				"ImageCreateURL" : "http://pc.e-eye:81/api/1020/image/create",
+				"NINAName" : "NINA Apollo VIII"
+			}
+		,
+		"CameraConfig" : [
+			{
+			"MonitorImageURL" : "http://dashboard.e-eye/webcam1.php",
+			"MonitorCameraName" : "Camera Apollo VIII"
+			}
+		]
+	}
+]
+}

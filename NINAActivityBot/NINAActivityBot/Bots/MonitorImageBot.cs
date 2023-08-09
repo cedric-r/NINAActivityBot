@@ -1,6 +1,7 @@
 ﻿using NINAActivityBot.Social;
 using NINAActivityBot.Social.Model;
 using NINAActivityBot.Util;
+using NINAActivityBot.Util.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,29 +13,28 @@ namespace NINAActivityBot.Bots
 {
     public class MonitorImageBot : Bot
     {
-        private const string _BotName = "MonitorImageBot";
-        private string URL = Parameters.Instance.MonitorImageURL;
         private const int Interval = 5 * 60 * 1000;
         private bool StopFlag = false;
+        private ConfigMonitorCamera Camera;
+        private List<ConfigSocialNet> SocialNets = new List<ConfigSocialNet>();
 
-        public MonitorImageBot() : base(_BotName)
+        public MonitorImageBot(string botName, List<ConfigSocialNet> socialNets, ConfigMonitorCamera camera) : base(botName)
         {
+            if (socialNets == null) throw new ArgumentNullException("Social nets can't be empty");
+            if (camera == null) throw new ArgumentNullException("Camera can't be empty");
+            Camera = camera;
+            SocialNets = socialNets;
         }
 
-        public MonitorImageBot(string uRL) : base(_BotName)
+        private void PostImage(ConfigMonitorCamera camera)
         {
-            URL = uRL;
-        }
-
-        private void PostImage()
-        {
-            String image = DownloadImage(URL);
+            String image = DownloadImage(camera.MonitorImageURL);
 
             SocialNetPost post = new SocialNetPost();
             post.Body = DateTime.Now + " Monitoring Camera 1";
             post.Visibility = SocialNetVisibility.Unlisted;
             post.Attachments.Add(new SocialNetAttachment() { FileName = image, Name = "webcam.jpg" });
-            Post(post);
+            Post(SocialNets, post);
             File.Delete(image);
         }
 
@@ -46,7 +46,7 @@ namespace NINAActivityBot.Bots
                 {
                     if (condition.Valid())
                     {
-                        PostImage();
+                        PostImage(Camera);
                     }
                     Logger.Log(BotName + ": Sleeping...");
                     Thread.Sleep(Interval);

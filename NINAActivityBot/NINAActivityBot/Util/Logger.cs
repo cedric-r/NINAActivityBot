@@ -13,7 +13,7 @@ namespace NINAActivityBot.Util
             if (Constants.LogToConsole) Console.WriteLine(DateTime.Now + " " + message);
             if (Constants.LogToFile)
             {
-                Config.GreateFolder();
+                Config.CreateFolder();
                 try
                 {
                     string strPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData);

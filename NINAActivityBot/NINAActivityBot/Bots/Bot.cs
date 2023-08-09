@@ -1,6 +1,7 @@
 ﻿using NINAActivityBot.Social;
 using NINAActivityBot.Social.Model;
 using NINAActivityBot.Util;
+using NINAActivityBot.Util.Model;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -46,13 +47,17 @@ namespace NINAActivityBot.Bots
             return tempFileName;
         }
 
-        protected void Post(SocialNetPost post)
+        protected void Post(List<ConfigSocialNet> socialNets, SocialNetPost post)
         {
-            Logger.Log(BotName + ": Posting to " + Parameters.Instance.SocialNetServer);
-            SocialNet social = SocialNetFactory.Create(Parameters.Instance.SocialNetName);
-            social.Connect(Parameters.Instance.SocialNetServer);
-            social.Login(Parameters.Instance.SocialUsername, Parameters.Instance.SocialPassword);
-            social.Post(post);
+            foreach (ConfigSocialNet socialNet in socialNets)
+            {
+
+                Logger.Log(BotName + ": Posting to " + socialNet.SocialNetServer);
+                SocialNet social = SocialNetFactory.Create(socialNet.SocialNetName);
+                social.Connect(socialNet.SocialNetServer);
+                social.Login(socialNet.SocialUsername, socialNet.SocialPassword);
+                social.Post(post);
+            }
         }
 
         public abstract void Start(BotCondition condition);
