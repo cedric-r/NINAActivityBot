@@ -31,7 +31,7 @@ namespace NINAActivityBot.Bots
             String image = DownloadImage(camera.MonitorImageURL);
 
             SocialNetPost post = new SocialNetPost();
-            post.Body = DateTime.Now + " Monitoring Camera 1";
+            post.Body = DateTime.Now + " Monitoring " + BotName;
             post.Visibility = SocialNetVisibility.Unlisted;
             post.Attachments.Add(new SocialNetAttachment() { FileName = image, Name = "webcam.jpg" });
             Post(SocialNets, post);

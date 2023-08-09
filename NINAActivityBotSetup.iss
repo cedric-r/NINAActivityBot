@@ -1,7 +1,7 @@
 [Setup]
 AppID={{3a7e63ad-c813-44f0-9489-e1744c9c2992}}
 AppName=NINA Activity Bot
-AppVersion=0.0.7
+AppVersion=0.0.8
 WizardStyle=modern
 DefaultDirName={autopf}\NINAActivityBot
 DefaultGroupName=NINA Activity Bot
