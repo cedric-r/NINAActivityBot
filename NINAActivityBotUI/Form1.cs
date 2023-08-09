@@ -38,9 +38,16 @@ namespace NINAActivityBotUI
             Config.SaveConfig();
         }
 
+        int textLength = 0;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            logBox.Text = String.Join("\r\n", Logger.LogHistory);
+            List<string> list = new List<string>(Logger.LogHistory);
+            list.RemoveRange(0, textLength); // Here remove the lines that have already been seen. Not very nice.
+            if (list.Count > 0)
+            {
+                logBox.AppendText("\r\n" + String.Join("\r\n", list)); ;
+                textLength = Logger.LogHistory.Count;
+            }
         }
     }
 }

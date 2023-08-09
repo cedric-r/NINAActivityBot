@@ -16,7 +16,7 @@ namespace NINAActivityBot.Bots
     public abstract class Bot
     {
         public static List<Bot> Bots = new List<Bot>();
-        protected string BotName = "Bot";
+        public string BotName = "Bot";
 
         public Bot(string botname)
         {

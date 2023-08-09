@@ -23,12 +23,14 @@ namespace NINAActivityBot.Util
                 foreach (ConfigMonitorCamera camera in observatory.CameraConfig)
                 {
                     MonitorImageBot bot1 = new MonitorImageBot(camera.MonitorCameraName, observatory.SocialNetConfig, camera);
+                    bot1.BotName = camera.MonitorCameraName;
                     Thread t = new Thread(() => bot1.Start(new BotConditionNinaIsRunning(observatory.NINAConfig.NINABaseURL))) { IsBackground = true };
                     MonitorImageThreads.Add(t);
                     t.Start();
                 }
 
                 NINAStatusBot bot2 = new NINAStatusBot(observatory.NINAConfig.NINAName, observatory.SocialNetConfig, observatory.NINAConfig);
+                bot2.BotName = observatory.NINAConfig.NINAName;
                 NINAStatusThread = new Thread(() => bot2.Start(new BotConditionNinaIsRunning(observatory.NINAConfig.NINABaseURL))) { IsBackground = true };
                 NINAStatusThread.Start();
             }
