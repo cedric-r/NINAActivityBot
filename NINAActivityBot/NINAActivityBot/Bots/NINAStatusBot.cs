@@ -110,7 +110,7 @@ namespace NINAActivityBot.Bots
                         if (EventMapping.ContainsKey(eventType))
                         {
                             SocialNetPost post = new SocialNetPost();
-                            post.Body = DateTime.Now + " " + EventMapping[eventType];
+                            post.Body = DateTime.Now + BotName + " " + EventMapping[eventType];
                             post.Visibility = SocialNetVisibility.Unlisted;
                             Post(SocialNets, post);
                         }
