@@ -8,9 +8,10 @@ namespace NINAActivityBot
 {
     public class Constants
     {
-        public const string Version = "0.0.5";
-        public static bool LogToConsole = true;
+        public const string Version = "0.0.6";
+        public static bool LogToConsole = false;
         public static bool LogToFile = true;
+        public static bool LogToTextBox = true;
         public const string Name = "NINAActivityBot";
     }
 }

@@ -28,14 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.buttonStop = new System.Windows.Forms.Button();
             this.buttonStart = new System.Windows.Forms.Button();
             this.logBox = new System.Windows.Forms.TextBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // buttonStop
             // 
-            this.buttonStop.Location = new System.Drawing.Point(201, 12);
+            this.buttonStop.Location = new System.Drawing.Point(484, 12);
             this.buttonStop.Name = "buttonStop";
             this.buttonStop.Size = new System.Drawing.Size(75, 23);
             this.buttonStop.TabIndex = 0;
@@ -58,14 +60,23 @@
             this.logBox.Location = new System.Drawing.Point(12, 41);
             this.logBox.Multiline = true;
             this.logBox.Name = "logBox";
-            this.logBox.Size = new System.Drawing.Size(264, 182);
+            this.logBox.ReadOnly = true;
+            this.logBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.logBox.Size = new System.Drawing.Size(547, 298);
             this.logBox.TabIndex = 2;
+            this.logBox.WordWrap = false;
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 200;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(288, 235);
+            this.ClientSize = new System.Drawing.Size(571, 351);
             this.Controls.Add(this.logBox);
             this.Controls.Add(this.buttonStart);
             this.Controls.Add(this.buttonStop);
@@ -83,5 +94,6 @@
         private Button buttonStop;
         private Button buttonStart;
         private TextBox logBox;
+        private System.Windows.Forms.Timer timer1;
     }
 }

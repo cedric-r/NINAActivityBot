@@ -8,6 +8,8 @@ namespace NINAActivityBot.Util
 {
     public static class Logger
     {
+        public static List<string> LogHistory = new List<string>();
+
         public static void Log(string message)
         {
             if (Constants.LogToConsole) Console.WriteLine(DateTime.Now + " " + message);
@@ -22,6 +24,10 @@ namespace NINAActivityBot.Util
                     System.IO.File.AppendAllText(strPath, DateTime.Now + " " + message + "\n");
                 }
                 catch (Exception) { }
+            }
+            if (Constants.LogToTextBox)
+            {
+                LogHistory.Add(DateTime.Now.ToString("HH:mm:ss")+ " " + message);
             }
         }
     }

@@ -37,5 +37,10 @@ namespace NINAActivityBotUI
         {
             Config.SaveConfig();
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            logBox.Text = String.Join("\r\n", Logger.LogHistory);
+        }
     }
 }

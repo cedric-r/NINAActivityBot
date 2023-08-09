@@ -17,7 +17,7 @@ namespace NINAActivityBot.Util
 
             Logger.Log("NINAActivityBot v" + Constants.Version);
 
-            Logger.Log("Starting threads");
+            Logger.Log("Starting bots");
             foreach (ConfigObservatory observatory in Parameters.Instance.ObservatoryConfig)
             {
                 foreach (ConfigMonitorCamera camera in observatory.CameraConfig)
@@ -33,7 +33,7 @@ namespace NINAActivityBot.Util
                 NINAStatusThread.Start();
             }
 
-            Logger.Log("Threads started");
+            Logger.Log("Bots started");
         }
 
         public static void Stop()
