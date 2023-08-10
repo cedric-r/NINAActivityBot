@@ -102,19 +102,21 @@ namespace NINAActivityBot.Bots
 
                 if (stuff.events.Count > 0)
                 {
-                    var lastEvent = stuff.events.Last;
-                    string eventId = lastEvent.id;
-                    string eventType = lastEvent.type;
-                    if (!EventsSeen.Contains(eventId))
+                    foreach (var lastEvent in stuff.events)
                     {
-                        if (EventMapping.ContainsKey(eventType))
+                        string eventId = lastEvent.id;
+                        string eventType = lastEvent.type;
+                        if (!EventsSeen.Contains(eventId))
                         {
-                            SocialNetPost post = new SocialNetPost();
-                            post.Body = DateTime.Now + BotName + " " + EventMapping[eventType];
-                            post.Visibility = SocialNetVisibility.Unlisted;
-                            Post(SocialNets, post);
+                            if (EventMapping.ContainsKey(eventType))
+                            {
+                                SocialNetPost post = new SocialNetPost();
+                                post.Body = DateTime.Now + BotName + " " + EventMapping[eventType];
+                                post.Visibility = SocialNetVisibility.Unlisted;
+                                Post(SocialNets, post); // Should we post a message for each status change or group them?
+                            }
+                            EventsSeen.Add(eventId);
                         }
-                        EventsSeen.Add(eventId);
                     }
                 }
 
