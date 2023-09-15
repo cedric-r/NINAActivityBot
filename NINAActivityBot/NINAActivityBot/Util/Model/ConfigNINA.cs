@@ -12,6 +12,7 @@ namespace NINAActivityBot.Util.Model
         public string NINAURL { get { return NINABaseURL + "sessions/sessions.json"; } }
         public string ImageCreateURL { get; set; } = "api/1020/image/create";
         public string NINAName { get; set; } = "NINA";
+        public string NINASignature { get; set; } = "";
 
     }
 }

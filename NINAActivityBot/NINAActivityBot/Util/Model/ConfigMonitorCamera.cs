@@ -10,5 +10,6 @@ namespace NINAActivityBot.Util.Model
     {
         public string MonitorImageURL { get; set; } = "http://dashboard.e-eye/webcam1.php";
         public string MonitorCameraName { get; set; } = "Camera";
+        public string MonitorCameraSignature { get; set; } = "";
     }
 }

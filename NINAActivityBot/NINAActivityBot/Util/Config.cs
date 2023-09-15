@@ -17,7 +17,9 @@ namespace NINAActivityBot.Util
             {
                 System.IO.Directory.CreateDirectory(strPath);
             }
-            catch (Exception) { }
+            catch (Exception e) {
+                Logger.Log("Maintenance: Error creating folder: " + e.ToString());
+            }
         }
 
         static Object writeLock = new Object();
@@ -34,7 +36,9 @@ namespace NINAActivityBot.Util
                     System.IO.File.WriteAllText(strPath, JsonConvert.SerializeObject(Parameters.Instance));
                 }
             }
-            catch (Exception) { }
+            catch (Exception e) {
+                Logger.Log("Maintenance: Error writing config: " + e.ToString());
+            }
         }
 
         public static void LoadConfig()
@@ -46,8 +50,10 @@ namespace NINAActivityBot.Util
                 strPath = Path.Combine(strPath, "config.json");
                 Parameters.Instance = JsonConvert.DeserializeObject<Parameters>(System.IO.File.ReadAllText(strPath));
             }
-            catch (Exception) 
+            catch (Exception e) 
             {
+                Logger.Log("Maintenance: Error loading config: " + e.ToString());
+
                 Parameters.Instance = new Parameters();
             }
         }
